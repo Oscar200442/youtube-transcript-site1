@@ -7,12 +7,14 @@ async function fetchTranscript() {
   downloadBtn.style.display = 'none';
 
   try {
+    console.log('Sending request with URL:', url); // Debug
     const response = await fetch('/get-transcript', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ url })
     });
     const data = await response.json();
+    console.log('Server response:', data); // Debug
 
     if (data.error) {
       outputDiv.innerHTML = `Error: ${data.error}`;
@@ -23,17 +25,7 @@ async function fetchTranscript() {
     downloadBtn.style.display = 'block';
     downloadBtn.dataset.transcript = data.transcript;
   } catch (error) {
+    console.error('Client-side error:', error); // Debug
     outputDiv.innerHTML = 'Error: Failed to fetch transcript.';
   }
-}
-
-function downloadTranscript() {
-  const transcript = document.getElementById('downloadBtn').dataset.transcript;
-  const blob = new Blob([transcript], { type: 'text/plain' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'transcript.txt';
-  a.click();
-  URL.revokeObjectURL(url);
 }
