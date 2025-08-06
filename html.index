@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Transcript Extractor</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>YouTube Transcript Extractor</h1>
+    <p>Paste the transcript from a YouTube video below (copy from the "Show transcript" feature).</p>
+    <textarea id="transcriptInput" rows="5" placeholder="Paste transcript here..."></textarea>
+    <button onclick="displayTranscript()">Display Transcript</button>
+    <div id="transcriptOutput"></div>
+    <button id="downloadBtn" style="display: none;" onclick="downloadTranscript()">Download as .txt</button>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
