@@ -1,0 +1,13 @@
+{
+  "name": "youtube-transcript-site1",
+  "version": "1.0.0",
+  "description": "A web app to extract YouTube video transcripts as .txt files",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "youtube-transcript": "^1.2.1"
+  }
+}
