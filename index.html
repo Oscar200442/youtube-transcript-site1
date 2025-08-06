@@ -3,18 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YouTube Transcript Extractor</title>
+  <title>TranscriptTranslate</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="container">
-    <h1>YouTube Transcript Extractor</h1>
-    <p>Paste the transcript from a YouTube video below (copy from the "Show transcript" feature).</p>
-    <textarea id="transcriptInput" rows="5" placeholder="Paste transcript here..."></textarea>
-    <button onclick="displayTranscript()">Display Transcript</button>
-    <div id="transcriptOutput"></div>
-    <button id="downloadBtn" style="display: none;" onclick="downloadTranscript()">Download as .txt</button>
+    <div class="card">
+      <div class="card-header">
+        <h1>TranscriptTranslate</h1>
+        <p>Bulk download YouTube video transcripts</p>
+      </div>
+      <div class="card-content">
+        <button id="signInButton" onclick="signIn()">Sign in with Google</button>
+        <div id="inputSection" style="display: none;">
+          <label for="youtubeLinks">Enter YouTube URLs (comma-separated):</label>
+          <textarea id="youtubeLinks" placeholder="e.g., https://www.youtube.com/watch?v=VIDEO_ID1,https://www.youtube.com/watch?v=VIDEO_ID2" rows="4"></textarea>
+          <button id="downloadTranscriptsButton" onclick="downloadTranscripts()">Get Transcripts</button>
+        </div>
+        <div id="error" class="error-message" style="display: none;"></div>
+        <div id="loading" class="loading-message" style="display: none;">Fetching transcripts, please wait...</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <h2>Transcripts</h2>
+      </div>
+      <div class="card-content">
+        <textarea id="transcriptOutput" readonly placeholder="Transcripts will appear here..." rows="10"></textarea>
+        <a id="downloadLink" style="display: none;" download="transcripts.txt">Download Transcripts</a>
+      </div>
+    </div>
   </div>
+  <script src="https://apis.google.com/js/api.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
