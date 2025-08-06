@@ -1,5 +1,5 @@
 const express = require('express');
-const { YoutubeTranscript } = require('youtube-transcript');
+const puppeteer = require('puppeteer');
 const app = express();
 const port = 3000;
 
@@ -9,15 +9,23 @@ app.use(express.json());
 app.post('/get-transcript', async (req, res) => {
   const { url } = req.body;
   try {
-    const videoId = url.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]+)/)?.[1];
-    if (!videoId) {
-      return res.status(400).json({ error: 'Invalid YouTube URL' });
-    }
+    const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] });
+    const page = await browser.newPage();
+    await page.goto(url, { waitUntil: 'networkidle2' });
 
-    const transcript = await YoutubeTranscript.fetchTranscript(videoId);
-    const transcriptText = transcript.map(segment => segment.text).join(' ');
+    await page.waitForSelector('button[aria-label="Show transcript"]', { timeout: 10000 });
+    await page.click('button[aria-label="Show transcript"]');
 
-    res.json({ transcript: transcriptText });
+    await page.waitForSelector('ytd-transcript-segment-renderer', { timeout: 10000 });
+
+    const transcript = await page.evaluate(() => {
+      return Array.from(document.querySelectorAll('ytd-transcript-segment-renderer'))
+        .map(el => el.querySelector('yt-formatted-string').textContent)
+        .join(' ');
+    });
+
+    await browser.close();
+    res.json({ transcript });
   } catch (error) {
     console.error('Error fetching transcript:', error);
     res.status(500).json({ error: 'Failed to fetch transcript. Ensure the video has transcripts enabled.' });
