@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Transcript Extractor</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>YouTube Transcript Extractor</h1>
+    <input type="text" id="youtubeUrl" placeholder="Enter YouTube video URL">
+    <button onclick="fetchTranscript()">Get Transcript</button>
+    <div id="transcriptOutput"></div>
+    <button id="downloadBtn" style="display: none;" onclick="downloadTranscript()">Download as .txt</button>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
